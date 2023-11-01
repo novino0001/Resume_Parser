@@ -1,0 +1,11 @@
+.field-Skills span {
+    width: 200px;  
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* .field-Skills {
+    width: 20px;
+} */
