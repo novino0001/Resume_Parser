@@ -9,6 +9,25 @@ class CandidateAdmin(admin.ModelAdmin):
     search_fields = ('Skills','Name',)
     list_editable = ('Skills',)
     list_per_page = 10
+
+    fieldsets = (
+        ("Basic Details",{
+            "fields":(
+                'Name','Email','Phone_number'
+            ),
+        }),
+        ("Education Details",{
+            "fields":(
+                'Degree','Experience','Skills',
+            ),
+        }),
+         ("Additional Details",{
+            "fields":(
+                'Applyfor','additional_info','additional_link','resume_file'
+            ),
+        }),
+
+    )
     
     # def custom_name_link(self, obj):
     #     url = reverse('admin:%s_%s_change' % (obj._meta.app_label, obj._meta.model_name),  args=[obj.pk] )

@@ -25,7 +25,9 @@ class Candidate(models.Model):
         return f"{self.Email} , {self.Phone_number}"
     Contact_Details.admin_order_field = 'email'
     Contact_Details.short_description = 'Contact Details'
-
+    
+    def __str__(self):
+        return self.user.email
 
 class Resume(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
