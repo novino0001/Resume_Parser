@@ -28,6 +28,17 @@ class CandidateAdmin(admin.ModelAdmin):
         }),
 
     )
+
+    #  use for heading in path Home › Resume_ › Candidates  › Username  = change candidate
+    def change_view(self, request, object_id, form_url='', extra_context = None):
+        obj = self.get_object(request, object_id)
+        context = {
+            **self.admin_site.each_context(request),
+            'title': f'Change {obj.user.username} Data' if obj else 'Change Candidate'
+        }
+        return super().change_view(
+            request, object_id, form_url, extra_context=context
+        )
     
     # def custom_name_link(self, obj):
     #     url = reverse('admin:%s_%s_change' % (obj._meta.app_label, obj._meta.model_name),  args=[obj.pk] )
