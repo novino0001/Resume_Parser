@@ -8,8 +8,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Resume_parser_NLP</title>
         <link rel="stylesheet" href="https://codepen.io/gymratpacks/pen/VKzBEp#0">
+        {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> {% endcomment %}
+
         <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> {% endcomment %}
 
         <link rel="stylesheet" href="css/main.css">
         <style>
@@ -628,14 +630,14 @@ color: #384047;
         <div class="col-md-12">
             <form action="" method="post" enctype="multipart/form-data" id="myForm">
                 {% csrf_token %}
-                <h1 style="color: #3ac162; font-family: cursive;">Upload resume</h1>
-                {% comment %} <center><legend>Upload resume</legend></center> {% endcomment %}
-                <label for="filename">Upload Resume/CV:</label>
-                <input type="file" id="filename" name="filename" required>
+                <h1 style="color: #3ac162; font-family: cursive;">For Parse service first login</h1>
+              
                 <br>
                 <br>
                 <br>
-                <button class="select" type="submit">Next</button>
+               <h1>  <a href="#" class="nav-item" class="my-link" id="openModal_login2">Login</a> </h1>
+                <h1 style="color: #EE7752; font-family: cursive;">or</h1>
+                 <h1> <a href="#" class="nav-item" class="my-link" id="openModal_register2">Register</a> </h1>
             </form>
          </div> 
       
@@ -651,8 +653,54 @@ color: #384047;
           preloader.style.display = 'none';
         }
     </script>
- 
-
+    
+    <script>
+      var openModal_register = document.getElementById('openModal_register2');
+      var modal_register = document.getElementById('myModal_register');
+      var closeModal_register = modal_register.querySelector('.close');
+    
+      openModal_register.addEventListener('click', function() {
+        modal_register.style.display = 'block';
+      });
+    
+      closeModal_register.addEventListener('click', function() {
+        modal_register.style.display = 'none';
+      });
+    
+      window.addEventListener('click', function(event) {
+        if (event.target == modal_register) {
+          modal_register.style.display = 'none';
+        }
+      });
+    
+      // Similar code for the login modal
+      var openModal_login = document.getElementById('openModal_login2');
+      var modal_login = document.getElementById('myModal_login');
+      var closeModal_login = modal_login.querySelector('.close');
+    
+      openModal_login.addEventListener('click', function() {
+        modal_login.style.display = 'block';
+      });
+    
+      closeModal_login.addEventListener('click', function() {
+        modal_login.style.display = 'none';
+      });
+    
+      window.addEventListener('click', function(event) {
+        if (event.target == modal_login) {
+          modal_login.style.display = 'none';
+        }
+      });
+    
+      // Add event listener for close button inside the form
+      var closeButtons = document.querySelectorAll('.close-modal');
+      closeButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          var modal = this.closest('.modal');
+          modal.style.display = 'none';
+        });
+      });
+    </script>
 
 </body>
 </html>

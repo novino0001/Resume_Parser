@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        
       </head>
        <style>
        * {
@@ -367,8 +368,8 @@ input {
              <div class="grad-bar"></div>
              
              <nav class="navbar">
-               <!-- <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ7NFdmha6nQnXiP1uIay9H0HGii2GroiyMdqa6sxIvzGw76co8_hZDMdNsxhdZsYVzuQ&usqp=CAU" height="50px"> -->
-               <p style="font-size: 30px;color: #EE7752;font-weight: bold; font-family: cursive;margin-left: -200px;">Pizone</p>
+              <img src="{% static 'Screenshot (124).png' %}"  width=100% height=150%>
+               <!-- <p style="font-size: 30px;color: #EE7752;font-weight: bold; font-family: cursive;margin-left: -200px;">PiZone</p> -->
                <div class="menu-toggle" id="mobile-menu">
                  <span class="bar"></span>
                  <span class="bar"></span>
@@ -376,16 +377,18 @@ input {
                </div>
                <ul class="nav no-search">
                 {% if request.user.is_authenticated %}
-          <li class="nav-item"><a href="/">Home</a></li>
-          {%if request.user.is_superuser %}
+                <li class="nav-item"><a href="/home/">Home</a></li>
+                {%if request.user.is_superuser %}
+         
                 <a href="/admin/" class="nav-item" class="my-link" id="openModal_login">{{request.user}}</a> 
                 {% else %}
-                <a href="#" class="nav-item" class="my-link" id="openModal_login">{{request.user}}</a> 
+                <a href="/user_data/" class="nav-item" class="my-link" id="openModal_login">{{request.user}}</a> 
+
                 {% endif %}
 
                 <a class="nav-item"  class="my-link" href="/logout/"  onclick = "return myFunction()"   >  Logout</a>
                 {% else %}
-                <li class="nav-item"><a href="/">Home</a></li>
+                {% comment %} <li class="nav-item"><a href="/home/">Home</a></li> {% endcomment %}
                 <a href="#" class="nav-item" class="my-link" id="openModal_login">Login</a>
                 <a href="#" class="nav-item" class="my-link" id="openModal_register">Register</a>
                  <!-- <li class="nav-item"><a href="#">Login</a></li> -->
@@ -459,6 +462,13 @@ input {
               });
             });
           </script>
+<!-- Include the script in your base template -->
+<script>
+  window.user_authenticated = {{ user.is_authenticated|yesno:"true,false" }};
+  window.user_active = {{ request.session.active|yesno:"true,false" }};
+  window.csrf_token = '{{ csrf_token }}';
+</script>
+<script src="{% static 'js/logout_on_leave.js' %}"></script>
 
 
       <script>

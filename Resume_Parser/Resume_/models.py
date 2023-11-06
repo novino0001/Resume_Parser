@@ -32,3 +32,5 @@ class Candidate(models.Model):
 class Resume(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     upload_resume = models.FileField(upload_to='documents')
+    created_date =  models.DateTimeField(auto_now_add=True)
+    # date_created = models.DateTimeField(auto_now_add=True, blank=True, null=True) 

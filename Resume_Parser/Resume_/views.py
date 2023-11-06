@@ -33,7 +33,7 @@ def register(request):
         user = User.objects.create(username =username,email = email ) 
         user.set_password(password)
         user.save() 
-        messages.info(request, 'account created successfully')
+        messages.info(request, 'account created successfully please login')
         print("----------------------->",username)
         return redirect('/')
        
@@ -72,14 +72,28 @@ def login_page(request):
              print("----------else------------->",username)
              messages.error(request,'now you are logged in')
 
-             return redirect('/')
+             return redirect('/home/')
              
 
      return HttpResponse('not found')
 
-def logout_page(request):
+def logout_page(request): 
     logout(request)
+    messages.error(request,'successfully logged out')
     return redirect("/")
+
+
+
+def index_home(request):
+    return render(request,'index.html')
+
+
+def user_data(request):
+    resume = Resume.objects.filter(user = request.user)[::-1]
+
+
+    print(">>>>>>>>>>>>>>>>>>>>>>",resume)
+    return render(request,'user_data.html',{'resumes':resume})
 
 
 
@@ -90,6 +104,7 @@ def convert_decimal_to_years_months(decimal_value):
     return years, months
 
 # Create your views here.
+@login_required
 def home(request):
     context = {}
     if request.method == 'POST':
@@ -214,6 +229,7 @@ def home(request):
 
 def nextpage(request):
     queryset = Candidate.objects.order_by('-user_id').first()
+    print("--------------------------------------------------------------------------->",queryset)
     # print("----------id-------",id)
     # queryset2 = Resume.objects.get(id=id)
     print("------------",queryset)
@@ -249,7 +265,7 @@ def nextpage(request):
         queryset.additional_info = Additional_info
         queryset.additional_link = Additional_link
         queryset.save()
-        return redirect("/")
+        return redirect("/home/")
     
     
    

@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <title>Document</title>
+
+  
+
+<style>
+@import "compass/css3";
+
+@import "compass/css3";
+@import url(https://fonts.googleapis.com/css?family=Patua+One|Open+Sans);
+
+* { 
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+	box-sizing: border-box; 
+}
+
+body {
+  background:#1d2834;
+}
+
+table {
+  border-collapse: separate;
+  width: 95%;
+  background:#fff;
+  @include border-radius(5px);
+  margin:50px auto;
+  @include box-shadow(0px 0px 5px rgba(0,0,0,0.3));
+}
+
+thead {
+  @include border-radius(5px);
+}
+
+thead th {
+  font-family: 'Patua One', cursive;
+  font-size:16px;
+  font-weight:400;
+  color:#fff;
+  @include text-shadow(1px 1px 0px rgba(0,0,0,0.5));
+  text-align:left;
+  padding:20px;
+  @include background-image(linear-gradient(#646f7f, #4a5564));
+  border-top:1px solid #858d99;
+  
+  &:first-child {
+   @include border-top-left-radius(5px); 
+  }
+
+  &:last-child {
+    @include border-top-right-radius(5px); 
+  }
+}
+
+tbody tr td {
+  font-family: 'Open Sans', sans-serif;
+  font-weight:400;
+  color:#5f6062;
+  font-size:13px;
+  padding:20px 20px 20px 20px;
+  border-bottom:1px solid #e0e0e0;
+  
+}
+
+tbody tr:nth-child(2n) {
+  background:#f0f3f5;
+}
+
+tbody tr:last-child td {
+  border-bottom:none;
+  &:first-child {
+    @include border-bottom-left-radius(5px);
+  }
+  &:last-child {
+    @include border-bottom-right-radius(5px);
+  }
+}
+
+tbody:hover > tr td {
+  @include opacity(0.5);
+  
+  /* uncomment for blur effect */
+  /* color:transparent;
+  @include text-shadow(0px 0px 2px rgba(0,0,0,0.8));*/
+}
+
+tbody:hover > tr:hover td {
+  @include text-shadow(none);
+  color:#2d2d2d;
+  @include opacity(1.0);
+}
+a {
+    text-decoration: none;
+}
+ .my-link {
+    text-decoration: none;
+}
+
+</style>
+</head>
+<body>
+  <div class="grad-bar"></div>  
+  <h1 style="color: rgb(253, 252, 252);">Applications</h1>
+  <table>
+    <thead>
+        <tr>
+            <th style="color: rgb(246, 244, 244);background-color: #232F3E;">S No.</th>
+            <th style="color: rgb(246, 244, 244);background-color:#232F3E;">Resume</th>
+            <th style="color: rgb(246, 244, 244);background-color:#232F3E;">Applied date</th>
+            <th style="color: rgb(246, 244, 244);background-color:#232F3E;">Status</th>
+             
+            <!-- <th>Resume</th>
+            <th>Applied date</th>
+            <th>Apply For</th> -->
+        </tr>
+    </thead>
+    <tbody>
+    
+
+      {% for resume in resumes %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+            <td > <p style="color: #2d415b;">{{ resume.upload_resume.name }} <a href="{{ resume.upload_resume.url }}" target="_blank">Open Resume</a></p>
+             </td>
+            <td>{{resume.created_date}}</td>
+            <td>successfully submitted</td>
+             
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
+{% endblock %}

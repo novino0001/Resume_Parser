@@ -5,8 +5,11 @@ from django.conf.urls.static import static
 # from .views import graph_view
 
 urlpatterns = [
-    path('',  views.home , name ='home' ),
+    path('',  views.index_home , name ='index_home' ),
+    path('home/',  views.home , name ='home' ),
     path('next/',  views.nextpage , name ='nextpage' ),
+    path('user_data/',  views.user_data , name ='user_data' ),
+    
     
 
     path('register/' , views.register , name='register'),
