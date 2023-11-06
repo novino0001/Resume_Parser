@@ -6,7 +6,7 @@ from django.urls import reverse
 # Register your models here.
 class CandidateAdmin(admin.ModelAdmin):
     list_display = ['Name','Contact_Details','Degree','Experience','Skills','resume_file']
-    search_fields = ('Skills','Name',)
+    search_fields = ('Skills','Name','Experience')
     list_editable = ('Skills',)
     list_per_page = 10
 
