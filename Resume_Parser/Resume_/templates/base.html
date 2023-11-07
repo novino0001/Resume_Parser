@@ -382,11 +382,11 @@ input {
          
                 <a href="/admin/" class="nav-item" class="my-link" id="openModal_login">{{request.user}}</a> 
                 {% else %}
-                <a href="/user_data/" class="nav-item" class="my-link" id="openModal_login">{{request.user}}</a> 
+               <li > <a href="/user_data/" class="nav-item" class="my-link" id="openModal_login">{{request.user}}</a></li>
 
                 {% endif %}
 
-                <a class="nav-item"  class="my-link" href="/logout/"  onclick = "return myFunction()"   >  Logout</a>
+                <a class="nav-item"  class="my-link" href="/logout/"  onclick = "return myFunction()"   >  Logout</a> 
                 {% else %}
                 {% comment %} <li class="nav-item"><a href="/home/">Home</a></li> {% endcomment %}
                 <a href="#" class="nav-item" class="my-link" id="openModal_login">Login</a>
