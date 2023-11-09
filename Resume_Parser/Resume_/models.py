@@ -13,10 +13,7 @@ class Candidate(models.Model):
     Phone_number = models.CharField(max_length=100)
     Degree=models.CharField(max_length=50)
     Skills=models.TextField(max_length=500)
-    # DOB = models.DateField(max_length=8)
-    Applyfor =  models.TextField(max_length=200,default="")
-    additional_info = models.TextField(max_length=200,default="")
-    additional_link = models.URLField( max_length=200,default="")
+    created_date =  models.DateTimeField(auto_now_add=True)
     Experience=models.TextField(default=0)
     resume_file = models.FileField()
 

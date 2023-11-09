@@ -63,9 +63,7 @@ def login_page(request):
 
         if user is None:
              messages.error(request,'Invalid Password')
-
-             print("------------if----------->",username)
-             print("------------if----------->",password)
+ 
              return redirect('/')
         else:
              login(request,user)
@@ -115,15 +113,15 @@ def home(request):
 
         res = Resume.objects.order_by('-id')[0]        
         pdf_n = res.upload_resume.name.split('/')[1]
-        print("===>", pdf_n)
+       
         target_path = "Resume_/documents/"
         files = os.listdir(target_path)
-        # latest_file = files[-1]
+      
         
       
         file_path = os.path.join(target_path, pdf_n)
         print("file_path ---->",file_path)
-        # file_path = 'Resume_/Siemens_cv.pdf'
+         
 
         try:
             doc = Document()
@@ -131,8 +129,7 @@ def home(request):
                 doc.add_paragraph(file.read())
             doc.save("text.docx")
             data = ResumeParser('text.docx').get_extracted_data()
-            # print("data ------------->",data)
-            # print("--------------exp---=============",data["total_experience"])  
+           
             experience_str = ""
             if data['total_experience'] is not None:
                 years, months = convert_decimal_to_years_months(data['total_experience'])
@@ -167,18 +164,14 @@ def home(request):
                 data['skills'] = 'not accessiable'
             if data['mobile_number'] == None:
                 data['mobile_number'] = 'not accessiable' 
-             
-
-            print("----------------exp-=============",data["total_experience"])  
-
+            
             degrees = ', '.join(data['degree'])    
             skills = ', '.join(data['skills'])    
             Candidate.objects.create(Name = data['name'],Email = data['email'],Phone_number = data['mobile_number'],Degree = degrees , Skills = skills ,Experience = data['total_experience'], user = request.user,resume_file = get_file)
-            return  redirect("/next/")
+            return redirect("/next/")
  
         except:
-            data = ResumeParser(file_path).get_extracted_data()
-            print("--------------exp---=============",data["total_experience"])  
+            data = ResumeParser(file_path).get_extracted_data() 
             experience_str = ""
             if data['total_experience'] is not None:
                 years, months = convert_decimal_to_years_months(data['total_experience'])
@@ -220,7 +213,7 @@ def home(request):
             skills = ', '.join(data['skills'])    
             print("--------------exp---=============",data["total_experience"])    
 # redirect(f"/update_transition/{queryset.id}/")
-            
+         
             Candidate.objects.create(Name = data['name'],Email = data['email'],Phone_number = data['mobile_number'],Degree = degrees , Skills = skills ,Experience = data['total_experience'], user = request.user, resume_file = get_file)
             
             return redirect("/next/")
@@ -228,12 +221,11 @@ def home(request):
 
 
 def nextpage(request):
-    queryset = Candidate.objects.order_by('-user_id').first()
-    print("--------------------------------------------------------------------------->",queryset)
-    # print("----------id-------",id)
-    # queryset2 = Resume.objects.get(id=id)
-    print("------------",queryset)
-    # print(queryset)
+  
+    queryset = Candidate.objects.filter(user = request.user)
+    latest_candidate = queryset.order_by('-created_date').first()
+    
+    
     if request.method == 'POST':
         data = request.POST
         name = data.get('user_name')
@@ -242,37 +234,24 @@ def nextpage(request):
         degree = data.get('degree')
         exp = data.get('user_exp')
         skill = data.get('user_skill')
-        applyfor = data.get('apply_for')
-        Additional_info = data.get('Additional_info')
-        Additional_link = data.get('Additional_link')
+         
 
-        # candidate = Candidate.objects.create(Applyfor = applyfor , 
-        #                                      Name = name,
-        #                                      Email = email,
-        #                                      Phone_number = phone_number,
-        #                                      Degree = degree,
-        #                                      Skills = skill
-        #                                      additional_info = Additional_info , additional_link = Additional_link,user=request.user)
-        # candidate.save()
-
-        queryset.Name = name
-        queryset.Email = email
-        queryset.Phone_number = phone_number
-        queryset.Degree = degree
-        queryset.Experience = exp
-        queryset.Skills = skill
-        queryset.Applyfor = applyfor
-        queryset.additional_info = Additional_info
-        queryset.additional_link = Additional_link
-        queryset.save()
+     
+        latest_candidate.Name = name
+        latest_candidate.Email = email
+        latest_candidate.Phone_number = phone_number
+        latest_candidate.Degree = degree
+        latest_candidate.Experience = exp
+        latest_candidate.Skills = skill
+       
+        latest_candidate.save()
+        print(queryset)
         return redirect("/home/")
     
     
    
 
-    print('queryset---------------------',queryset)
-    print('queryset---------------------',queryset.Email)
-    print('queryset---------------------',queryset.Phone_number)
+ 
 
-    return render(request,'demo.html',{'queryset':queryset}) 
+    return render(request,'demo.html',{'queryset':latest_candidate}) 
 

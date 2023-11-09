@@ -21,9 +21,9 @@ class CandidateAdmin(admin.ModelAdmin):
                 'Degree','Experience','Skills',
             ),
         }),
-         ("Additional Details",{
+         ("Documents",{
             "fields":(
-                'Applyfor','additional_info','additional_link','resume_file'
+                'resume_file',
             ),
         }),
 
@@ -40,16 +40,7 @@ class CandidateAdmin(admin.ModelAdmin):
             request, object_id, form_url, extra_context=context
         )
     
-    # def custom_name_link(self, obj):
-    #     url = reverse('admin:%s_%s_change' % (obj._meta.app_label, obj._meta.model_name),  args=[obj.pk] )
-    #     return format_html('<a href="{}">{}</a>', url, obj.Name)
-
-    # custom_name_link.admin_order_field = 'Name'  # Make 'Name' clickable for sorting
-    # custom_name_link.short_description = 'Name' 
-   
-   
-   
-   
+  
    
     def Skills(self, obj): 
       return format_html(f'<span style="width: 10px;">{obj.content[0:100]}</span>')
