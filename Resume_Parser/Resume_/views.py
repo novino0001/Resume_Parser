@@ -6,7 +6,7 @@ from docx import Document
 from django.contrib import messages
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
-
+# from .models import UserProfile
 
  
 
@@ -254,4 +254,50 @@ def nextpage(request):
  
 
     return render(request,'demo.html',{'queryset':latest_candidate}) 
+ 
 
+# Dummy function to simulate payment success
+def process_payment(amount):
+    # Implement your payment logic using the payment gateway SDK here
+    # For example, if using Stripe, you would call the Stripe API to charge the user
+    # This is a placeholder function, replace it with actual payment processing logic
+    # Return True if payment is successful, False otherwise
+    # Example Stripe payment logic:
+    # success = stripe.Charge.create(amount=amount, currency='usd', ...)
+    success = True  # Placeholder for success/failure
+    return success
+
+# Function to parse resume
+def parse_resume(request):
+    user_profile = request.user.userprofile
+
+    if user_profile.usage_count < 5:  # Free uses
+        # Perform resume parsing logic
+
+        # Update usage count
+        user_profile.usage_count += 1
+        user_profile.save()
+        return HttpResponse("Resume parsed successfully for free!")
+    else:
+        # Payment required for additional uses
+        amount_to_charge = 10  # Replace with your pricing
+        payment_successful = process_payment(amount_to_charge)
+
+        if payment_successful:
+            # Update usage count after successful payment
+            user_profile.usage_count += 1
+            user_profile.save()
+            return HttpResponse("Payment successful! Resume parsed.")
+        else:
+            return HttpResponse("Payment failed. Unable to parse resume.")
+
+# Handle payment success callback from the payment gateway
+def payment_success(request):
+    # You may want to implement additional security measures here
+    # to verify the payment success callback came from the payment gateway
+
+    # Update user's usage count after successful payment
+    user_profile = request.user.userprofile
+    user_profile.usage_count += 1
+    user_profile.save()
+    return HttpResponse("Payment successful! Resume parsed.")
